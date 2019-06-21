@@ -18,9 +18,7 @@ public class Receipt {
         for (Product product : products) {
             OrderItem curItem = findOrderItemByProduct(items, product);
 
-            BigDecimal reducedPrice = product.getPrice()
-                    .multiply(product.getDiscountRate())
-                    .multiply(new BigDecimal(curItem.getCount()));
+            BigDecimal reducedPrice = caculatePriceWithDiscount(product, curItem);
 
             subTotal = subTotal.subtract(reducedPrice);
         }
@@ -29,7 +27,6 @@ public class Receipt {
 
         return grandTotal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
-
 
     private OrderItem findOrderItemByProduct(List<OrderItem> items, Product product) {
         OrderItem curItem = null;
@@ -46,9 +43,19 @@ public class Receipt {
         BigDecimal subTotal = new BigDecimal(0);
         for (Product product : products) {
             OrderItem item = findOrderItemByProduct(items, product);
-            BigDecimal itemTotal = product.getPrice().multiply(new BigDecimal(item.getCount()));
+            BigDecimal itemTotal = caculatePrice(product, item);
             subTotal = subTotal.add(itemTotal);
         }
         return subTotal;
+    }
+
+    public BigDecimal caculatePriceWithDiscount(Product product, OrderItem item) {
+        return product.getPrice()
+                .multiply(product.getDiscountRate())
+                .multiply(new BigDecimal(item.getCount()));
+    }
+
+    public BigDecimal caculatePrice(Product product, OrderItem item) {
+        return product.getPrice().multiply(new BigDecimal(item.getCount()));
     }
 }
