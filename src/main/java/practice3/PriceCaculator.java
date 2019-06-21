@@ -1,5 +1,7 @@
 package practice3;
 
+import java.math.BigDecimal;
+
 public class PriceCaculator {
     private Order order;
 
@@ -11,17 +13,17 @@ public class PriceCaculator {
         BigDecimal subTotal = new BigDecimal(0);
 
         // Total up line items
-        for (OrderLineItem lineItem : order.orderLineItemList) {
+        for (OrderLineItem lineItem : order.getOrderLineItemList()) {
             subTotal = subTotal.add(lineItem.getPrice());
         }
 
         // Subtract discounts
-        for (BigDecimal discount : order.discounts) {
+        for (BigDecimal discount : order.getDiscounts()) {
             subTotal = subTotal.subtract(discount);
         }
 
         // calculate tax
-        BigDecimal tax = subTotal.multiply(order.tax);
+        BigDecimal tax = subTotal.multiply(order.getTax());
 
         // calculate GrandTotal
         BigDecimal grandTotal = subTotal.add(tax);

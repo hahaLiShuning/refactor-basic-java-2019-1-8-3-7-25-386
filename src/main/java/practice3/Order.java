@@ -9,6 +9,18 @@ public class Order {
     private List<BigDecimal> discounts;
     private BigDecimal tax;
 
+    public List<OrderLineItem> getOrderLineItemList() {
+        return orderLineItemList;
+    }
+
+    public List<BigDecimal> getDiscounts() {
+        return discounts;
+    }
+
+    public BigDecimal getTax() {
+        return tax;
+    }
+
     public Order(List<OrderLineItem> orderLineItemList, List<BigDecimal> discounts) {
         this.orderLineItemList = orderLineItemList;
         this.discounts = discounts;
